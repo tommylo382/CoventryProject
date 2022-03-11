@@ -2,3 +2,4 @@
 set -e # abort script at first error
 deno lint --unstable
 deno fmt
+deno test --allow-all --unstable

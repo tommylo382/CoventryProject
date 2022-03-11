@@ -1,0 +1,31 @@
+<!doctype html>
+
+<html lang = "en">
+    <head>
+        <meta charset = "utf-8"/>
+        <meta name = "description" content = "home page of cinema booking system"/>
+        <title>Cinema Booking System</title>
+        <!-- external css -->
+        <link href = "/style.css" type = "text/css" rel = "stylesheet" />
+    </head>
+    <body>
+        <header>
+            <h1>{{#unless admin}}Register{{else}}Create account{{/unless}}</h1>
+            <a href = "/">Home</a>
+            {{#unless admin}}
+                <a href = "/login">Log in</a>
+            {{/unless}}
+        </header>
+        <main>
+            <form action = "/register" method = "post">
+                <p><label>User Name: </label><br /><input name = "userName" type = "text" autofocus /></p>
+                <p><label>Password: </label><br /><input name = "password" type = "password" /></p>
+                {{#if admin}}
+                    <p>Creating Staff Account: <br />
+                    <label><input name = "role" type = "checkbox" value = "s" />Yes</label></p>
+                {{/if}}
+                <p><input type = "submit" value = "Register" /></p>
+            </form>
+        </main>
+    </body>
+</html>

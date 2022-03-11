@@ -1,8 +1,25 @@
-<html>
+<!doctype html>
+
+<html lang = "en">
     <head>
-        <title>home</title>
+        <meta charset = "utf-8"/>
+        <meta name = "description" content = "home page of cinema booking system"/>
+        <title>Cinema Booking System</title>
+        <!-- external css -->
+        <link href = "/style.css" type = "text/css" rel = "stylesheet" />
     </head>
     <body>
-        test
+        <header>
+            <h1>Cinema Booking System</h1>
+            {{#if authorised}}
+                <a href = "/logout">Log Out</a>
+            {{else}}
+                <a href = "/login">Log In</a>
+                <a href = "/register">Register</a>
+            {{/if}}
+            {{#if admin}}
+                <a href = "/register">Create account</a>
+            {{/if}}
+        </header>
     </body>
 </html>
