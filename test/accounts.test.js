@@ -4,7 +4,13 @@ import { assertEquals } from "https://deno.land/std/testing/asserts.ts";
 
 // internal import
 
-import { del, login, register, role, showUser } from "../modules/accounts.js?db=test";
+import {
+  del,
+  login,
+  register,
+  role,
+  showUser,
+} from "../modules/accounts.js?db=test";
 
 // test login
 
@@ -134,10 +140,14 @@ Deno.test("get role(user)", async () => {
 
 // test show users
 
-Deno.test("show", async () => {
+Deno.test("show users", async () => {
   const test = await showUser();
   console.log(test);
 
-  assertEquals(test, [ { user_name: "admin1", role: "a" }, { user_name: "host", role: "h" }, { user_name: "staff1", role: "s" },
-                      { user_name: "user1", role: null } ], "show users fail");
+  assertEquals(test, [
+    { user_name: "admin1", role: "a" },
+    { user_name: "host", role: "h" },
+    { user_name: "staff1", role: "s" },
+    { user_name: "user1", role: null },
+  ], "show users fail");
 });

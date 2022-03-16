@@ -11,6 +11,7 @@ USE 300COM;
 
 -- tables
 
+DROP TABLE IF EXISTS movies;
 DROP TABLE IF EXISTS accounts;
 
 CREATE TABLE IF NOT EXISTS accounts (
@@ -19,12 +20,23 @@ CREATE TABLE IF NOT EXISTS accounts (
     role VARCHAR(1)
 );
 
+CREATE TABLE IF NOT EXISTS movies (
+    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(50) NOT NULL,
+    thumbnail TEXT,
+    description VARCHAR(3000) NOT NULL
+);
+
 -- init records
 
 INSERT INTO accounts (user_name, password, role) VALUES ('host', 'password', 'h');
 INSERT INTO accounts (user_name, password, role) VALUES ('admin1', 'password', 'a');
 INSERT INTO accounts (user_name, password, role) VALUES ('staff1', 'password', 's');
 INSERT INTO accounts (user_name, password) VALUES ('user1', 'password');
+
+INSERT INTO movies (name, description) VALUES ('test1', 'sample record');
+INSERT INTO movies (name, description) VALUES ('test2', 'sample record');
+INSERT INTO movies (name, description) VALUES ('test3', 'sample record');
 
 -- testing db
 
@@ -33,6 +45,7 @@ USE test;
 
 -- tables
 
+DROP TABLE IF EXISTS movies;
 DROP TABLE IF EXISTS accounts;
 
 CREATE TABLE IF NOT EXISTS accounts (
@@ -41,9 +54,20 @@ CREATE TABLE IF NOT EXISTS accounts (
     role VARCHAR(1)
 );
 
+CREATE TABLE IF NOT EXISTS movies (
+    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(50) NOT NULL,
+    thumbnail TEXT,
+    description VARCHAR(3000) NOT NULL
+);
+
 -- init records
 
 INSERT INTO accounts (user_name, password, role) VALUES ('host', 'password', 'h');
 INSERT INTO accounts (user_name, password, role) VALUES ('admin1', 'password', 'a');
 INSERT INTO accounts (user_name, password, role) VALUES ('staff1', 'password', 's');
 INSERT INTO accounts (user_name, password) VALUES ('user1', 'password');
+
+INSERT INTO movies (name, description) VALUES ('test1', 'sample record');
+INSERT INTO movies (name, description) VALUES ('test2', 'sample record');
+INSERT INTO movies (name, description) VALUES ('test3', 'sample record');

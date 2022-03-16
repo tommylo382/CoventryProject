@@ -24,5 +24,13 @@
                 <a href = "/users">Manage Users</a>
             {{/if}}
         </header>
+        <main>
+            {{#each movies}}
+                <section>
+                    <img src = "{{this.thumbnail}}" />
+                    <h3>Movie name: {{this.name}}</h3>
+                </section>
+            {{/each}}
+        </main>
     </body>
 </html>

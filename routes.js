@@ -5,7 +5,8 @@ import { Handlebars } from "https://deno.land/x/handlebars/mod.ts";
 
 // internal import
 
-import { login, register, role, showUser, del } from "./modules/accounts.js";
+import { del, login, register, role, showUser } from "./modules/accounts.js";
+import { showMovie } from "./modules/movies.js";
 
 const handle = new Handlebars({ defaultLayout: "" });
 const router = new Router();
@@ -17,8 +18,8 @@ router.get("/", async (ctx) => {
   const host = ctx.cookies.get("host");
   const admin = ctx.cookies.get("admin");
   const staff = ctx.cookies.get("staff");
-  const data = { authorised, host, admin, staff };
-  console.log(data);
+  const movies = await showMovie()
+  const data = { authorised, host, admin, staff, movies };
   const body = await handle.renderView("home", data);
   ctx.response.body = body;
 });
@@ -52,7 +53,7 @@ router.get("/users", async (ctx) => {
   } else {
     const users = await showUser();
     const data = { users };
-    console.log(data)
+    console.log(data);
     const body = await handle.renderView("users", data);
     ctx.response.body = body;
   }
@@ -116,9 +117,9 @@ router.get("/logout", (ctx) => {
 });
 
 router.get("/delete", (ctx) => {
-  const params = ctx.request.url.searchParams
-  const userName = params.get("name")
-  del(userName)
+  const params = ctx.request.url.searchParams;
+  const userName = params.get("name");
+  del(userName);
   ctx.response.redirect("/users");
 });
 

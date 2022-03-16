@@ -105,3 +105,13 @@ export async function showAcc() {
   db.close();
   return records;
 }
+
+// show all movies
+
+export async function showFilm() {
+  const db = await new Client().connect(conn);
+  const sql = `SELECT name, thumbnail FROM movies;`;
+  const records = await db.query(sql);
+  db.close();
+  return records;
+}

@@ -10,7 +10,9 @@ if (url.searchParams.get("db") === "test") {
 
 // internal import
 
-const { findUser, verifyPass, addAcc, delAcc, getRole, showAcc } = await import(path);
+const { findUser, verifyPass, addAcc, delAcc, getRole, showAcc } = await import(
+  path
+);
 
 // login
 
