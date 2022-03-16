@@ -9,3 +9,9 @@ Import database:
 ```
 mysql -u root -pp455w0rd < database.sql
 ```
+
+Git push:
+
+```
+git push origin HEAD:main
+```

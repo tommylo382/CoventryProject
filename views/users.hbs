@@ -10,16 +10,18 @@
     </head>
     <body>
         <header>
-            <h1>Log In</h1>
+            <h1>Manage Users</h1>
             <a href = "/">Home</a>
-            <a href = "/register">Register</a>
+            <a href = "/logout">Log Out</a>
         </header>
         <main>
-            <form action = "/login" method = "post">
-                <p><label>User Name: </label><br /><input name = "userName" type = "text" autofocus /></p>
-                <p><label>Password: </label><br /><input name = "password" type = "password" /></p>
-                <p><input type = "submit" value = "Log In" /></p>
-            </form>
+            {{#each users}}
+                <section>
+                    <h3>User name: {{this.user_name}}</h3>
+                    <p>Role: {{this.role}}</p>
+                    <p><a href = "/delete?name={{this.user_name}}">Delete</a></p>
+                </section>
+            {{/each}}
         </main>
     </body>
 </html>
