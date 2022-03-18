@@ -4,9 +4,7 @@ import { assertEquals } from "https://deno.land/std/testing/asserts.ts";
 
 // internal import
 
-import {
-  showMovie,
-} from "../modules/movies.js?db=test";
+import { showMovie } from "../modules/movies.js?db=test";
 
 // test show movies
 
@@ -15,8 +13,8 @@ Deno.test("show movies", async () => {
   console.log(test);
 
   assertEquals(test, [
-    { name: "test1", thumbnail: null },
-    { name: "test2", thumbnail: null },
-    { name: "test3", thumbnail: null },
-  ], "show movies fail");
+                      { id: 1, name: "test1", thumbnail: null, cinemas: [ { name: "cinema1" }, { name: "cinema2" } ] },
+                      { id: 2, name: "test2", thumbnail: null, cinemas: [ { name: "cinema3" } ] },
+                      { id: 3, name: "test3", thumbnail: null, cinemas: [] }
+                    ], "show movies fail");
 });

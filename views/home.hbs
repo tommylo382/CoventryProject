@@ -29,6 +29,7 @@
                 <section>
                     <img src = "{{this.thumbnail}}" />
                     <h3>Movie name: {{this.name}}</h3>
+                    <p>Cinemas:{{#each this.cinemas}} {{this.name}}{{/each}}</p>
                 </section>
             {{/each}}
         </main>

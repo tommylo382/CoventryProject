@@ -110,7 +110,17 @@ export async function showAcc() {
 
 export async function showFilm() {
   const db = await new Client().connect(conn);
-  const sql = `SELECT name, thumbnail FROM movies;`;
+  const sql = `SELECT id, name, thumbnail FROM movies;`;
+  const records = await db.query(sql);
+  db.close();
+  return records;
+}
+
+// show all movies
+
+export async function showCinema(movieId) {
+  const db = await new Client().connect(conn);
+  const sql = `SELECT cinemas.name FROM ((shows INNER JOIN cinemas ON cinema_id=cinemas.id) INNER JOIN movies ON movie_id=movies.id) WHERE movies.id='${movieId}';`;
   const records = await db.query(sql);
   db.close();
   return records;

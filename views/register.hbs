@@ -18,8 +18,8 @@
         </header>
         <main>
             <form action = "/register" method = "post">
-                <p><label>User Name: </label><br /><input name = "userName" type = "text" autofocus /></p>
-                <p><label>Password: </label><br /><input name = "password" type = "password" /></p>
+                <p><label>User Name: </label><br /><input name = "userName" type = "text" required autofocus /></p>
+                <p><label>Password: </label><br /><input name = "password" type = "password" required /></p>
                 {{#if admin}}
                     <p>Creating Staff Account: <br />
                     <label><input name = "role" type = "checkbox" value = "s" />Yes</label></p>

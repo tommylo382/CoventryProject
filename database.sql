@@ -11,6 +11,8 @@ USE 300COM;
 
 -- tables
 
+DROP TABLE IF EXISTS shows;
+DROP TABLE IF EXISTS cinemas;
 DROP TABLE IF EXISTS movies;
 DROP TABLE IF EXISTS accounts;
 
@@ -27,6 +29,20 @@ CREATE TABLE IF NOT EXISTS movies (
     description VARCHAR(3000) NOT NULL
 );
 
+CREATE TABLE IF NOT EXISTS cinemas (
+    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(50) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS shows (
+    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    show_time DATETIME NOT NULL,
+    movie_id  INT UNSIGNED NOT NULL,
+    FOREIGN KEY (movie_id) REFERENCES movies(id),
+    cinema_id INT UNSIGNED NOT NULL,
+    FOREIGN KEY (cinema_id) REFERENCES cinemas(id)
+);
+
 -- init records
 
 INSERT INTO accounts (user_name, password, role) VALUES ('host', 'password', 'h');
@@ -37,6 +53,14 @@ INSERT INTO accounts (user_name, password) VALUES ('user1', 'password');
 INSERT INTO movies (name, description) VALUES ('test1', 'sample record');
 INSERT INTO movies (name, description) VALUES ('test2', 'sample record');
 INSERT INTO movies (name, description) VALUES ('test3', 'sample record');
+
+INSERT INTO cinemas (name) VALUES ('cinema1');
+INSERT INTO cinemas (name) VALUES ('cinema2');
+INSERT INTO cinemas (name) VALUES ('cinema3');
+
+INSERT INTO shows (show_time, movie_id, cinema_id) VALUES ('2022-03-18 11:00:00', '1', '1');
+INSERT INTO shows (show_time, movie_id, cinema_id) VALUES ('2022-03-18 11:30:00', '1', '2');
+INSERT INTO shows (show_time, movie_id, cinema_id) VALUES ('2022-03-18 12:00:00', '2', '3');
 
 -- testing db
 
@@ -45,6 +69,8 @@ USE test;
 
 -- tables
 
+DROP TABLE IF EXISTS shows;
+DROP TABLE IF EXISTS cinemas;
 DROP TABLE IF EXISTS movies;
 DROP TABLE IF EXISTS accounts;
 
@@ -61,6 +87,20 @@ CREATE TABLE IF NOT EXISTS movies (
     description VARCHAR(3000) NOT NULL
 );
 
+CREATE TABLE IF NOT EXISTS cinemas (
+    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(50) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS shows (
+    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    show_time DATETIME NOT NULL,
+    movie_id  INT UNSIGNED NOT NULL,
+    FOREIGN KEY (movie_id) REFERENCES movies(id),
+    cinema_id INT UNSIGNED NOT NULL,
+    FOREIGN KEY (cinema_id) REFERENCES cinemas(id)
+);
+
 -- init records
 
 INSERT INTO accounts (user_name, password, role) VALUES ('host', 'password', 'h');
@@ -71,3 +111,11 @@ INSERT INTO accounts (user_name, password) VALUES ('user1', 'password');
 INSERT INTO movies (name, description) VALUES ('test1', 'sample record');
 INSERT INTO movies (name, description) VALUES ('test2', 'sample record');
 INSERT INTO movies (name, description) VALUES ('test3', 'sample record');
+
+INSERT INTO cinemas (name) VALUES ('cinema1');
+INSERT INTO cinemas (name) VALUES ('cinema2');
+INSERT INTO cinemas (name) VALUES ('cinema3');
+
+INSERT INTO shows (show_time, movie_id, cinema_id) VALUES ('2022-03-18 11:00:00', '1', '1');
+INSERT INTO shows (show_time, movie_id, cinema_id) VALUES ('2022-03-18 11:30:00', '1', '2');
+INSERT INTO shows (show_time, movie_id, cinema_id) VALUES ('2022-03-18 12:00:00', '2', '3');
