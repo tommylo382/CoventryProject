@@ -6,7 +6,7 @@ import { Handlebars } from "https://deno.land/x/handlebars/mod.ts";
 // internal import
 
 import { del, login, register, role, showUser } from "./modules/accounts.js";
-import { showMovie, showMovieDetail } from "./modules/movies.js";
+import { showMovie, showMovieDetail, findMovie } from "./modules/movies.js";
 
 const handle = new Handlebars({ defaultLayout: "" });
 const router = new Router();
@@ -74,7 +74,8 @@ router.get("/search", async (ctx) => {
   const params = ctx.request.url.searchParams;
   const type = params.get("type");
   const keyword = params.get("keyword");
-  const data = { authorised };
+  const movies = await findMovie(type, keyword);
+  const data = { authorised, movies };
   const body = await handle.renderView("search", data);
   ctx.response.body = body;
 });
@@ -126,12 +127,9 @@ router.post("/register", async (ctx) => {
 });
 
 router.post("/search", async (ctx) => {
-  const authorised = ctx.cookies.get("authorised");
   const body = ctx.request.body({ type: "form" });
   const value = await body.value;
   const obj = Object.fromEntries(value);
-  console.log(obj);
-  const message = await register(obj);
   ctx.response.redirect(`/search?type=${obj.type}&keyword=${obj.keyword}`);
 });
 

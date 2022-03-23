@@ -30,19 +30,21 @@ export async function showMovieDetail(id) {
   const record = await showOneFilm(id);
   record.cinemas = await showCinema(id);
   for (const cinema of record.cinemas) {
-    const shows = await showShows(id, cinema.name)
+    const shows = await showShows(id, cinema.name);
     for (const show of shows) {
-      show.show_time = JSON.stringify(show.show_time)
-      show.show_time = `${show.show_time.split("T")[0].substring(1)} ${show.show_time.split("T")[1].split(".")[0]}`
+      show.show_time = JSON.stringify(show.show_time);
+      show.show_time = `${show.show_time.split("T")[0].substring(1)} ${
+        show.show_time.split("T")[1].split(".")[0]
+      }`;
     }
-    cinema.shows = shows
+    cinema.shows = shows;
   }
   return record;
 }
 
 // search movies
 
-export async function findMovie() {
-  const records = await findFilm();
+export async function findMovie(type, keyword) {
+  const records = await findFilm(type, keyword);
   return records;
 }

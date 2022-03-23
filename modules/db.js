@@ -131,7 +131,8 @@ export async function showCinema(movieId) {
 
 export async function showOneFilm(id) {
   const db = await new Client().connect(conn);
-  const sql = `SELECT id, name, thumbnail, description FROM movies WHERE id="${id}";`;
+  const sql =
+    `SELECT id, name, thumbnail, description FROM movies WHERE id="${id}";`;
   const records = await db.query(sql);
   db.close();
   return records[0];
@@ -154,9 +155,11 @@ export async function findFilm(type, keyword) {
   const db = await new Client().connect(conn);
   let sql;
   if (type === "name") {
-    sql = `SELECT id, name, thumbnail FROM movies WHERE name LIKE "%${keyword}%";`;
+    sql =
+      `SELECT id, name, thumbnail FROM movies WHERE name LIKE "%${keyword}%";`;
   } else {
-    sql = `SELECT movies.id, movies.name, movies.thumbnail FROM ((shows INNER JOIN cinemas ON cinema_id=cinemas.id) INNER JOIN movies ON movie_id=movies.id) WHERE cinemas.name LIKE "%${keyword}%";`;
+    sql =
+      `SELECT DISTINCT movies.id, movies.name, movies.thumbnail FROM ((shows INNER JOIN cinemas ON cinema_id=cinemas.id) INNER JOIN movies ON movie_id=movies.id) WHERE cinemas.name LIKE "%${keyword}%";`;
   }
   const records = await db.query(sql);
   db.close();

@@ -83,7 +83,7 @@ Deno.test("register staff", async () => {
   console.log(test);
 
   assertEquals(test, "create account test_staff", "register staff fail");
-  await del("test_staff")
+  await del("test_staff");
 });
 
 Deno.test("registing with already exists username", async () => {

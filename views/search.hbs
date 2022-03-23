@@ -30,6 +30,14 @@
                 </p>
                 <p><input type = "submit" value = "Search" /></p>
             </form>
+            {{#each movies}}
+                <section>
+                    <a href = "/detail?id={{this.id}}">
+                        <img src = "{{this.thumbnail}}" />
+                        <h3>Movie name: {{this.name}}</h3>
+                    </a>
+                </section>
+            {{/each}}
         </main>
     </body>
 </html>
