@@ -1,0 +1,52 @@
+<!doctype html>
+
+<html lang = "en">
+    <head>
+        <meta charset = "utf-8"/>
+        <meta name = "description" content = "home page of cinema booking system"/>
+        <title>Cinema Booking System</title>
+        <!-- external css -->
+        <link href = "/style.css" type = "text/css" rel = "stylesheet" />
+    </head>
+    <body>
+        <header>
+            <h1>Movie Detail</h1>
+            <a href = "/">Home</a>
+            {{#if authorised}}
+                <a href = "/logout">Log Out</a>
+            {{else}}
+                <a href = "/login">Log In</a>
+                <a href = "/register">Register</a>
+            {{/if}}
+        </header>
+        <main>
+            <section>
+                <img src = "{{movie.thumbnail}}" />
+                <h3>Movie name: {{movie.name}}</h3>
+                <p>Description: {{movie.description}}</p>
+                <article>
+                    <p>Shows:
+                        {{#each movie.cinemas}}
+                            <p>{{this.name}}: 
+                                {{#each this.shows}}
+                                    <a>{{this.show_time}}</a>
+                                {{/each}}
+                            </p>
+                        {{/each}}
+                    </p>
+                </article>
+            </section>
+            <section>
+                <h3>Comments:</h3>
+                {{#each comments}}
+                    <article>
+                    </article>
+                {{/each}}
+                {{#if authorised}}
+                    <article>
+                    </article>
+                {{/if}}
+            </section>
+        </main>
+    </body>
+</html>

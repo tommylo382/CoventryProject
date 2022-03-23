@@ -72,6 +72,20 @@ Deno.test("register", async () => {
   assertEquals(test, "create account test", "register fail");
 });
 
+Deno.test("register staff", async () => {
+  const acc = {
+    userName: "test_staff",
+    password: "password",
+    role: "s",
+  };
+
+  const test = await register(acc);
+  console.log(test);
+
+  assertEquals(test, "create account test_staff", "register staff fail");
+  await del("test_staff")
+});
+
 Deno.test("registing with already exists username", async () => {
   const acc = {
     userName: "test",

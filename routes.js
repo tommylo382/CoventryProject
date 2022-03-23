@@ -6,7 +6,7 @@ import { Handlebars } from "https://deno.land/x/handlebars/mod.ts";
 // internal import
 
 import { del, login, register, role, showUser } from "./modules/accounts.js";
-import { showMovie } from "./modules/movies.js";
+import { showMovie, showMovieDetail } from "./modules/movies.js";
 
 const handle = new Handlebars({ defaultLayout: "" });
 const router = new Router();
@@ -59,6 +59,26 @@ router.get("/users", async (ctx) => {
   }
 });
 
+router.get("/detail", async (ctx) => {
+  const authorised = ctx.cookies.get("authorised");
+  const params = ctx.request.url.searchParams;
+  const id = params.get("id");
+  const movie = await showMovieDetail(id);
+  const data = { authorised, movie };
+  const body = await handle.renderView("detail", data);
+  ctx.response.body = body;
+});
+
+router.get("/search", async (ctx) => {
+  const authorised = ctx.cookies.get("authorised");
+  const params = ctx.request.url.searchParams;
+  const type = params.get("type");
+  const keyword = params.get("keyword");
+  const data = { authorised };
+  const body = await handle.renderView("search", data);
+  ctx.response.body = body;
+});
+
 // process form data
 
 router.post("/login", async (ctx) => {
@@ -95,7 +115,6 @@ router.post("/register", async (ctx) => {
   const body = ctx.request.body({ type: "form" });
   const value = await body.value;
   const obj = Object.fromEntries(value);
-  console.log(obj);
   const message = await register(obj);
   if (message === `username ${obj.userName} already exists`) {
     ctx.response.redirect("/register");
@@ -104,6 +123,16 @@ router.post("/register", async (ctx) => {
   } else {
     ctx.response.redirect("/login");
   }
+});
+
+router.post("/search", async (ctx) => {
+  const authorised = ctx.cookies.get("authorised");
+  const body = ctx.request.body({ type: "form" });
+  const value = await body.value;
+  const obj = Object.fromEntries(value);
+  console.log(obj);
+  const message = await register(obj);
+  ctx.response.redirect(`/search?type=${obj.type}&keyword=${obj.keyword}`);
 });
 
 // button functions

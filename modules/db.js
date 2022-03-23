@@ -100,7 +100,7 @@ export async function getRole(user) {
 
 export async function showAcc() {
   const db = await new Client().connect(conn);
-  const sql = `SELECT user_name, role FROM accounts;`;
+  const sql = "SELECT user_name, role FROM accounts;";
   const records = await db.query(sql);
   db.close();
   return records;
@@ -110,17 +110,54 @@ export async function showAcc() {
 
 export async function showFilm() {
   const db = await new Client().connect(conn);
-  const sql = `SELECT id, name, thumbnail FROM movies;`;
+  const sql = "SELECT id, name, thumbnail FROM movies;";
   const records = await db.query(sql);
   db.close();
   return records;
 }
 
-// show all movies
+// show all cinemas of a movie
 
 export async function showCinema(movieId) {
   const db = await new Client().connect(conn);
-  const sql = `SELECT cinemas.name FROM ((shows INNER JOIN cinemas ON cinema_id=cinemas.id) INNER JOIN movies ON movie_id=movies.id) WHERE movies.id='${movieId}';`;
+  const sql =
+    `SELECT DISTINCT cinemas.name FROM ((shows INNER JOIN cinemas ON cinema_id=cinemas.id) INNER JOIN movies ON movie_id=movies.id) WHERE movies.id="${movieId}";`;
+  const records = await db.query(sql);
+  db.close();
+  return records;
+}
+
+// show one movie
+
+export async function showOneFilm(id) {
+  const db = await new Client().connect(conn);
+  const sql = `SELECT id, name, thumbnail, description FROM movies WHERE id="${id}";`;
+  const records = await db.query(sql);
+  db.close();
+  return records[0];
+}
+
+// show all shows of a movie
+
+export async function showShows(movieId, cinemaName) {
+  const db = await new Client().connect(conn);
+  const sql =
+    `SELECT show_time FROM ((shows INNER JOIN cinemas ON cinema_id=cinemas.id) INNER JOIN movies ON movie_id=movies.id) WHERE movies.id="${movieId}" AND cinemas.name="${cinemaName}";`;
+  const records = await db.query(sql);
+  db.close();
+  return records;
+}
+
+// search movies
+
+export async function findFilm(type, keyword) {
+  const db = await new Client().connect(conn);
+  let sql;
+  if (type === "name") {
+    sql = `SELECT id, name, thumbnail FROM movies WHERE name LIKE "%${keyword}%";`;
+  } else {
+    sql = `SELECT movies.id, movies.name, movies.thumbnail FROM ((shows INNER JOIN cinemas ON cinema_id=cinemas.id) INNER JOIN movies ON movie_id=movies.id) WHERE cinemas.name LIKE "%${keyword}%";`;
+  }
   const records = await db.query(sql);
   db.close();
   return records;

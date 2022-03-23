@@ -23,13 +23,16 @@
             {{#if host}}
                 <a href = "/users">Manage Users</a>
             {{/if}}
+            <a href = "/search">Search Movies</a>
         </header>
         <main>
             {{#each movies}}
                 <section>
-                    <img src = "{{this.thumbnail}}" />
-                    <h3>Movie name: {{this.name}}</h3>
-                    <p>Cinemas:{{#each this.cinemas}} {{this.name}}{{/each}}</p>
+                    <a href = "/detail?id={{this.id}}">
+                        <img src = "{{this.thumbnail}}" />
+                        <h3>Movie name: {{this.name}}</h3>
+                        <p>Cinemas:{{#each this.cinemas}} {{this.name}}{{/each}}</p>
+                    </a>
                 </section>
             {{/each}}
         </main>
