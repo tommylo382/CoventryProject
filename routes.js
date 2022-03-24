@@ -6,7 +6,7 @@ import { Handlebars } from "https://deno.land/x/handlebars/mod.ts";
 // internal import
 
 import { del, login, register, role, showUser } from "./modules/accounts.js";
-import { showMovie, showMovieDetail, findMovie } from "./modules/movies.js";
+import { findMovie, showMovie, showMovieDetail, editMovie, addMovie, delMovie } from "./modules/movies.js";
 
 const handle = new Handlebars({ defaultLayout: "" });
 const router = new Router();
@@ -61,10 +61,11 @@ router.get("/users", async (ctx) => {
 
 router.get("/detail", async (ctx) => {
   const authorised = ctx.cookies.get("authorised");
+  const staff = ctx.cookies.get("staff");
   const params = ctx.request.url.searchParams;
   const id = params.get("id");
   const movie = await showMovieDetail(id);
-  const data = { authorised, movie };
+  const data = { authorised, staff, movie };
   const body = await handle.renderView("detail", data);
   ctx.response.body = body;
 });
@@ -78,6 +79,30 @@ router.get("/search", async (ctx) => {
   const data = { authorised, movies };
   const body = await handle.renderView("search", data);
   ctx.response.body = body;
+});
+
+router.get("/edit", async (ctx) => {
+  const staff = ctx.cookies.get("staff");
+  if (staff === undefined) {
+    ctx.response.redirect("/");
+  } else {
+    const params = ctx.request.url.searchParams;
+    const id = params.get("id");
+    const movie = await showMovieDetail(id);
+    const data = { movie };
+    const body = await handle.renderView("edit", data);
+    ctx.response.body = body;
+  }
+});
+
+router.get("/add_movie", async (ctx) => {
+  const staff = ctx.cookies.get("staff");
+  if (staff === undefined) {
+    ctx.response.redirect("/");
+  } else {
+    const body = await handle.renderView("add_movie");
+    ctx.response.body = body;
+  }
 });
 
 // process form data
@@ -133,6 +158,20 @@ router.post("/search", async (ctx) => {
   ctx.response.redirect(`/search?type=${obj.type}&keyword=${obj.keyword}`);
 });
 
+router.post("/edit", async (ctx) => {
+  const body = ctx.request.body({ type: "form-data" });
+  const value = await body.value.read();
+  await editMovie(value);
+  ctx.response.redirect(`/detail?id=${value.fields.id}`);
+});
+
+router.post("/add_movie", async (ctx) => {
+  const body = ctx.request.body({ type: "form-data" });
+  const value = await body.value.read();
+  await addMovie(value);
+  ctx.response.redirect("/");
+});
+
 // button functions
 
 router.get("/logout", (ctx) => {
@@ -143,11 +182,18 @@ router.get("/logout", (ctx) => {
   ctx.response.redirect("/");
 });
 
-router.get("/delete", (ctx) => {
+router.get("/delete_user", (ctx) => {
   const params = ctx.request.url.searchParams;
   const userName = params.get("name");
   del(userName);
   ctx.response.redirect("/users");
+});
+
+router.get("/delete_movie", (ctx) => {
+  const params = ctx.request.url.searchParams;
+  const id = params.get("id");
+  delMovie(id);
+  ctx.response.redirect("/");
 });
 
 // export router

@@ -35,6 +35,7 @@
                     <a href = "/detail?id={{this.id}}">
                         <img src = "{{this.thumbnail}}" />
                         <h3>Movie name: {{this.name}}</h3>
+                        <p>Cinemas:{{#each this.cinemas}} {{this.name}}{{/each}}</p>
                     </a>
                 </section>
             {{/each}}

@@ -1,0 +1,28 @@
+<!doctype html>
+
+<html lang = "en">
+    <head>
+        <meta charset = "utf-8"/>
+        <meta name = "description" content = "home page of cinema booking system"/>
+        <title>Cinema Booking System</title>
+        <!-- external css -->
+        <link href = "/style.css" type = "text/css" rel = "stylesheet" />
+    </head>
+    <body>
+        <header>
+            <h1>Edit Movie Detail</h1>
+            <a href = "/">Home</a>
+        </header>
+        <main>
+            <section>
+                <form action = "/edit" method = "post" enctype = "multipart/form-data">
+                    <input name = "id" type = "hidden" value = "{{movie.id}}" required />
+                    <p><label>Movie name: </label><br /><input name = "name" type = "text" value = "{{movie.name}}" required autofocus /></p>
+                    <p><label>Description: </label><br /><input name = "description" type = "text" value = "{{movie.description}}" required /></p>
+                    <p><label>Thumbnail: </label><br /><input name = "thumbnail" type = "file" accept = "image/jpeg" /></p>
+                    <p><input type = "submit" value = "Edit" /></p>
+                </form>
+            </section>
+        </main>
+    </body>
+</html>

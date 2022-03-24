@@ -110,7 +110,7 @@ export async function showAcc() {
 
 export async function showFilm() {
   const db = await new Client().connect(conn);
-  const sql = "SELECT id, name, thumbnail FROM movies;";
+  const sql = "SELECT id, name, thumbnail FROM movies ORDER BY id DESC;";
   const records = await db.query(sql);
   db.close();
   return records;
@@ -164,4 +164,51 @@ export async function findFilm(type, keyword) {
   const records = await db.query(sql);
   db.close();
   return records;
+}
+
+// edit movie detail
+
+export async function editDetail(data, image) {
+  const db = await new Client().connect(conn);
+  let sql;
+  if (image === undefined) {
+    sql = `UPDATE movies SET name="${data.name}", description="${data.description}" WHERE id="${data.id}";`
+  } else {
+    sql = `UPDATE movies SET name="${data.name}", description="${data.description}", thumbnail="${image}" WHERE id="${data.id}";`
+  }
+  await db.query(sql);
+  db.close();
+}
+
+// create new movie
+
+export async function addFilm(data, image) {
+  const db = await new Client().connect(conn);
+  const sql = `INSERT INTO movies(name, description, thumbnail) VALUES("${data.name}", "${data.description}", "${image}");`;
+  await db.query(sql);
+  db.close();
+}
+
+// check if a movie exists
+
+export async function checkFilm(id) {
+  const db = await new Client().connect(conn);
+  const sql =
+    `SELECT COUNT(id) AS count FROM movies WHERE id="${id}";`;
+  const records = await db.query(sql);
+  db.close();
+  if (records[0].count) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+// delete movie
+
+export async function delFilm(id) {
+  const db = await new Client().connect(conn);
+  const sql = `DELETE FROM movies WHERE id="${id}"`;
+  await db.query(sql);
+  db.close();
 }

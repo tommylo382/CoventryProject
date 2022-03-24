@@ -1,0 +1,27 @@
+<!doctype html>
+
+<html lang = "en">
+    <head>
+        <meta charset = "utf-8"/>
+        <meta name = "description" content = "home page of cinema booking system"/>
+        <title>Cinema Booking System</title>
+        <!-- external css -->
+        <link href = "/style.css" type = "text/css" rel = "stylesheet" />
+    </head>
+    <body>
+        <header>
+            <h1>Add Movie</h1>
+            <a href = "/">Home</a>
+        </header>
+        <main>
+            <section>
+                <form action = "/add_movie" method = "post" enctype = "multipart/form-data">
+                    <p><label>Movie name: </label><br /><input name = "name" type = "text" required autofocus /></p>
+                    <p><label>Description: </label><br /><input name = "description" type = "text" required /></p>
+                    <p><label>Thumbnail: </label><br /><input name = "thumbnail" type = "file" accept = "image/jpeg" required /></p>
+                    <p><input type = "submit" value = "Add" /></p>
+                </form>
+            </section>
+        </main>
+    </body>
+</html>

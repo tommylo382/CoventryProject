@@ -17,15 +17,17 @@
             {{/unless}}
         </header>
         <main>
-            <form action = "/register" method = "post">
-                <p><label>User Name: </label><br /><input name = "userName" type = "text" required autofocus /></p>
-                <p><label>Password: </label><br /><input name = "password" type = "password" required /></p>
-                {{#if admin}}
-                    <p>Creating Staff Account: <br />
-                    <label><input name = "role" type = "checkbox" value = "s" />Yes</label></p>
-                {{/if}}
-                <p><input type = "submit" value = "Register" /></p>
-            </form>
+            <section>
+                <form action = "/register" method = "post">
+                    <p><label>User Name: </label><br /><input name = "userName" type = "text" required autofocus /></p>
+                    <p><label>Password: </label><br /><input name = "password" type = "password" required /></p>
+                    {{#if admin}}
+                        <p>Creating Staff Account: <br />
+                        <label><input name = "role" type = "checkbox" value = "s" />Yes</label></p>
+                    {{/if}}
+                    <p><input type = "submit" value = "{{#unless admin}}Register{{else}}Create{{/unless}}" /></p>
+                </form>
+            </section>
         </main>
     </body>
 </html>
