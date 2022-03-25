@@ -4,7 +4,11 @@ import { assertEquals } from "https://deno.land/std/testing/asserts.ts";
 
 // internal import
 
-import { showComment, addComment, delComment } from "../modules/comments.js?db=test";
+import {
+  addComment,
+  delComment,
+  showComment,
+} from "../modules/comments.js?db=test";
 
 // test show comments
 
@@ -13,14 +17,19 @@ Deno.test("show comments", async () => {
   console.log(test);
 
   assertEquals(test, [
-  { id: 1, name: "user1", rating: 3, review: "sample record" },
-  { id: 2, name: "staff1", rating: 5, review: "sample record" }
-], "show comments fail");
+    { id: 1, name: "user1", rating: 3, review: "sample record" },
+    { id: 2, name: "staff1", rating: 5, review: "sample record" },
+  ], "show comments fail");
 
   test = await showComment(2);
   console.log(test);
 
-  assertEquals(test, [{ id: 3, name: "user1", rating: 3, review: "sample record" }], "show comments fail");
+  assertEquals(test, [{
+    id: 3,
+    name: "user1",
+    rating: 3,
+    review: "sample record",
+  }], "show comments fail");
 
   test = await showComment(3);
   console.log(test);
@@ -32,10 +41,10 @@ Deno.test("show comments", async () => {
 
 Deno.test("create comment", async () => {
   const comment = {
-      movie_id: "1",
-      name: "user1",
-      rating: 5,
-      review: "test"
+    movieId: "1",
+    name: "user1",
+    rating: 5,
+    review: "test",
   };
 
   const test = await addComment(comment);

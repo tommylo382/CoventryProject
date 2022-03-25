@@ -14,7 +14,7 @@ import {
   showMovie,
   showMovieDetail,
 } from "./modules/movies.js";
-import { showComment, addComment, delComment } from "./modules/comments.js";
+import { addComment, delComment, showComment } from "./modules/comments.js";
 
 const handle = new Handlebars({ defaultLayout: "" });
 const router = new Router();
@@ -186,7 +186,7 @@ router.post("/add_comment", async (ctx) => {
   const value = await body.value;
   const obj = Object.fromEntries(value);
   await addComment(obj);
-  ctx.response.redirect(`/detail?id=${obj.movie_id}`);
+  ctx.response.redirect(`/detail?id=${obj.movieId}`);
 });
 
 // button functions

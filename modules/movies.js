@@ -25,6 +25,7 @@ const {
   addFilm,
   checkFilm,
   delFilm,
+  showRating,
 } = await import(
   path
 );
@@ -34,6 +35,8 @@ const {
 export async function showMovie() {
   const records = await showFilm();
   for (const record of records) {
+    record.rating = await showRating(record.id)
+    record.rating = Math.round(record.rating * 10) / 10;
     record.cinemas = await showCinema(record.id);
   }
   return records;
@@ -43,6 +46,8 @@ export async function showMovie() {
 
 export async function showMovieDetail(id) {
   const record = await showOneFilm(id);
+  record.rating = await showRating(id);
+  record.rating = Math.round(record.rating * 10) / 10;
   record.cinemas = await showCinema(id);
   for (const cinema of record.cinemas) {
     const shows = await showShows(id, cinema.name);
@@ -62,6 +67,8 @@ export async function showMovieDetail(id) {
 export async function findMovie(type, keyword) {
   const records = await findFilm(type, keyword);
   for (const record of records) {
+    record.rating = await showRating(record.id);
+    record.rating = Math.round(record.rating * 10) / 10;
     record.cinemas = await showCinema(record.id);
   }
   return records;

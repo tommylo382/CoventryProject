@@ -219,7 +219,8 @@ export async function delFilm(id) {
 
 export async function showReview(id) {
   const db = await new Client().connect(conn);
-  const sql = `SELECT id, name, rating, review FROM comments WHERE movie_id="${id}";`;
+  const sql =
+    `SELECT id, name, rating, review FROM comments WHERE movie_id="${id}";`;
   const records = await db.query(sql);
   db.close();
   return records;
@@ -230,7 +231,7 @@ export async function showReview(id) {
 export async function addReview(data) {
   const db = await new Client().connect(conn);
   const sql =
-    `INSERT INTO comments(movie_id, name, rating, review) VALUES("${data.movie_id}", "${data.name}", "${data.rating}", "${data.review}");`;
+    `INSERT INTO comments(movie_id, name, rating, review) VALUES("${data.movieId}", "${data.name}", "${data.rating}", "${data.review}");`;
   await db.query(sql);
   db.close();
 }
@@ -256,4 +257,14 @@ export async function delReview(id) {
   const sql = `DELETE FROM comments WHERE id="${id}"`;
   await db.query(sql);
   db.close();
+}
+
+// show the ratings of a movie
+
+export async function showRating(id) {
+  const db = await new Client().connect(conn);
+  const sql = `SELECT AVG(rating) AS ratings FROM comments WHERE movie_id="${id}"`;
+  const records = await db.query(sql);
+  db.close();
+  return records[0].ratings;
 }
