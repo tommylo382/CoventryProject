@@ -11,6 +11,7 @@ USE 300COM;
 
 -- tables
 
+DROP TABLE IF EXISTS comments;
 DROP TABLE IF EXISTS shows;
 DROP TABLE IF EXISTS cinemas;
 DROP TABLE IF EXISTS movies;
@@ -41,6 +42,15 @@ CREATE TABLE IF NOT EXISTS shows (
     FOREIGN KEY (movie_id) REFERENCES movies(id),
     cinema_id INT UNSIGNED NOT NULL,
     FOREIGN KEY (cinema_id) REFERENCES cinemas(id)
+);
+
+CREATE TABLE IF NOT EXISTS comments (
+    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    movie_id  INT UNSIGNED NOT NULL,
+    FOREIGN KEY (movie_id) REFERENCES movies(id),
+    name VARCHAR(50) NOT NULL,
+    rating  TINYINT UNSIGNED NOT NULL,
+    review VARCHAR(3000) NOT NULL
 );
 
 -- init records
@@ -62,6 +72,10 @@ INSERT INTO shows (show_time, movie_id, cinema_id) VALUES ('2022-03-18 11:00:00'
 INSERT INTO shows (show_time, movie_id, cinema_id) VALUES ('2022-03-18 11:30:00', '1', '2');
 INSERT INTO shows (show_time, movie_id, cinema_id) VALUES ('2022-03-18 12:00:00', '2', '3');
 
+INSERT INTO comments (movie_id, name, rating, review) VALUES ('1', 'user1', '3', 'sample record');
+INSERT INTO comments (movie_id, name, rating, review) VALUES ('1', 'staff1', '5', 'sample record');
+INSERT INTO comments (movie_id, name, rating, review) VALUES ('2', 'user1', '3', 'sample record');
+
 -- testing db
 
 CREATE DATABASE IF NOT EXISTS test;
@@ -69,6 +83,7 @@ USE test;
 
 -- tables
 
+DROP TABLE IF EXISTS comments;
 DROP TABLE IF EXISTS shows;
 DROP TABLE IF EXISTS cinemas;
 DROP TABLE IF EXISTS movies;
@@ -101,6 +116,15 @@ CREATE TABLE IF NOT EXISTS shows (
     FOREIGN KEY (cinema_id) REFERENCES cinemas(id)
 );
 
+CREATE TABLE IF NOT EXISTS comments (
+    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    movie_id  INT UNSIGNED NOT NULL,
+    FOREIGN KEY (movie_id) REFERENCES movies(id),
+    name VARCHAR(50) NOT NULL,
+    rating  TINYINT UNSIGNED NOT NULL,
+    review VARCHAR(3000) NOT NULL
+);
+
 -- init records
 
 INSERT INTO accounts (user_name, password, role) VALUES ('host', 'password', 'h');
@@ -119,3 +143,7 @@ INSERT INTO cinemas (name) VALUES ('cinema3');
 INSERT INTO shows (show_time, movie_id, cinema_id) VALUES ('2022-03-18 11:00:00', '1', '1');
 INSERT INTO shows (show_time, movie_id, cinema_id) VALUES ('2022-03-18 11:30:00', '1', '2');
 INSERT INTO shows (show_time, movie_id, cinema_id) VALUES ('2022-03-18 12:00:00', '2', '3');
+
+INSERT INTO comments (movie_id, name, rating, review) VALUES ('1', 'user1', '3', 'sample record');
+INSERT INTO comments (movie_id, name, rating, review) VALUES ('1', 'staff1', '5', 'sample record');
+INSERT INTO comments (movie_id, name, rating, review) VALUES ('2', 'user1', '3', 'sample record');

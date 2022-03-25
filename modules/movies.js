@@ -15,7 +15,17 @@ import { Base64 } from "https://deno.land/x/bb64@1.1.0/mod.ts";
 
 // internal import
 
-const { showFilm, showCinema, showOneFilm, showShows, findFilm, editDetail, addFilm, checkFilm, delFilm } = await import(
+const {
+  showFilm,
+  showCinema,
+  showOneFilm,
+  showShows,
+  findFilm,
+  editDetail,
+  addFilm,
+  checkFilm,
+  delFilm,
+} = await import(
   path
 );
 
@@ -63,17 +73,17 @@ export async function editMovie(data) {
   const file = data.files[0];
   data = data.fields;
   if (file.originalName === "") {
-    await editDetail(data)
+    await editDetail(data);
   } else {
     const size = {
       width: 128,
       height: 72,
-    }
-    const image = await resize(Deno.readFileSync(file.filename), size)
-    const imageURL = `data:image/jpeg;base64,${Base64.fromUint8Array(image)}`
-    await editDetail(data, imageURL)
+    };
+    const image = await resize(Deno.readFileSync(file.filename), size);
+    const imageURL = `data:image/jpeg;base64,${Base64.fromUint8Array(image)}`;
+    await editDetail(data, imageURL);
   }
-  return `edited movie id ${data.id}'s detail`
+  return `edited movie id ${data.id}'s detail`;
 }
 
 // create new movie
@@ -84,11 +94,11 @@ export async function addMovie(data) {
   const size = {
     width: 128,
     height: 72,
-  }
-  const image = await resize(Deno.readFileSync(file.filename), size)
-  const imageURL = `data:image/jpeg;base64,${Base64.fromUint8Array(image)}`
-  await addFilm(data, imageURL)
-  return `create movie ${data.name}`
+  };
+  const image = await resize(Deno.readFileSync(file.filename), size);
+  const imageURL = `data:image/jpeg;base64,${Base64.fromUint8Array(image)}`;
+  await addFilm(data, imageURL);
+  return `create movie ${data.name}`;
 }
 
 // delete movie

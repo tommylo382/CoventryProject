@@ -5,6 +5,7 @@
         <meta charset = "utf-8"/>
         <meta name = "description" content = "home page of cinema booking system"/>
         <title>Cinema Booking System</title>
+        <script type = "module" src = "/slider.js" defer></script>
         <!-- external css -->
         <link href = "/style.css" type = "text/css" rel = "stylesheet" />
     </head>
@@ -44,10 +45,23 @@
                 <h3>Comments:</h3>
                 {{#each comments}}
                     <article>
+                        <p>User: {{this.name}}</p>
+                        <p>Rating: {{this.rating}}</p>
+                        <p>{{this.review}}</p>
+                        {{#if ../staff}}
+                            <p><a href = "/delete_comment?id={{this.id}}&movieId={{../movie.id}}">Delete</a></p>
+                        {{/if}}
                     </article>
                 {{/each}}
                 {{#if authorised}}
                     <article>
+                        <form action = "/add_comment" method = "post">
+                            <input name = "movie_id" type = "hidden" value = "{{movie.id}}" required />
+                            <input name = "name" type = "hidden" value = "{{authorised}}" required />
+                            <p><label>Rating: </label><input name = "rating" type = "range" value = "3" min = "1" max = "5" /><output name  = "rating_value">3</output></p>
+                            <p><textarea name = "review" required></textarea></p>
+                            <p><input type = "submit" value = "Post" /></p>
+                        </form>
                     </article>
                 {{/if}}
             </section>

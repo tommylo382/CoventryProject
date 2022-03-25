@@ -6,7 +6,15 @@ import { Handlebars } from "https://deno.land/x/handlebars/mod.ts";
 // internal import
 
 import { del, login, register, role, showUser } from "./modules/accounts.js";
-import { findMovie, showMovie, showMovieDetail, editMovie, addMovie, delMovie } from "./modules/movies.js";
+import {
+  addMovie,
+  delMovie,
+  editMovie,
+  findMovie,
+  showMovie,
+  showMovieDetail,
+} from "./modules/movies.js";
+import { showComment, addComment, delComment } from "./modules/comments.js";
 
 const handle = new Handlebars({ defaultLayout: "" });
 const router = new Router();
@@ -65,7 +73,8 @@ router.get("/detail", async (ctx) => {
   const params = ctx.request.url.searchParams;
   const id = params.get("id");
   const movie = await showMovieDetail(id);
-  const data = { authorised, staff, movie };
+  const comments = await showComment(id);
+  const data = { authorised, staff, movie, comments };
   const body = await handle.renderView("detail", data);
   ctx.response.body = body;
 });
@@ -172,6 +181,14 @@ router.post("/add_movie", async (ctx) => {
   ctx.response.redirect("/");
 });
 
+router.post("/add_comment", async (ctx) => {
+  const body = ctx.request.body({ type: "form" });
+  const value = await body.value;
+  const obj = Object.fromEntries(value);
+  await addComment(obj);
+  ctx.response.redirect(`/detail?id=${obj.movie_id}`);
+});
+
 // button functions
 
 router.get("/logout", (ctx) => {
@@ -194,6 +211,14 @@ router.get("/delete_movie", (ctx) => {
   const id = params.get("id");
   delMovie(id);
   ctx.response.redirect("/");
+});
+
+router.get("/delete_comment", (ctx) => {
+  const params = ctx.request.url.searchParams;
+  const id = params.get("id");
+  const movieId = params.get("movieId");
+  delComment(id);
+  ctx.response.redirect(`/detail?id=${movieId}`);
 });
 
 // export router
