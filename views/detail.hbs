@@ -5,6 +5,7 @@
         <meta charset = "utf-8"/>
         <meta name = "description" content = "home page of cinema booking system"/>
         <title>Cinema Booking System</title>
+        <!-- JavaScript for updating slider value -->
         <script type = "module" src = "/slider.js" defer></script>
         <!-- external css -->
         <link href = "/style.css" type = "text/css" rel = "stylesheet" />
@@ -35,10 +36,13 @@
                         {{#each movie.cinemas}}
                             <p>{{this.name}}: 
                                 {{#each this.shows}}
-                                    <a>{{this.show_time}}</a>
+                                    <a href = "/show?id={{this.id}}&movieId={{../../movie.id}}">{{this.show_time}}</a>
                                 {{/each}}
                             </p>
                         {{/each}}
+                        {{#if staff}}
+                            <p><a href = "/add_show?id={{movie.id}}">Add show</a></p>
+                        {{/if}}
                     </p>
                 </article>
             </section>

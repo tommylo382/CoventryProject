@@ -15,6 +15,7 @@ import {
   showMovieDetail,
 } from "./modules/movies.js";
 import { addComment, delComment, showComment } from "./modules/comments.js";
+import { showAllCinema, addNewShow, delShow } from "./modules/shows.js";
 
 const handle = new Handlebars({ defaultLayout: "" });
 const router = new Router();
@@ -114,6 +115,36 @@ router.get("/add_movie", async (ctx) => {
   }
 });
 
+router.get("/add_show", async (ctx) => {
+  const staff = ctx.cookies.get("staff");
+  if (staff === undefined) {
+    ctx.response.redirect("/");
+  } else {
+    const params = ctx.request.url.searchParams;
+    const id = params.get("id");
+    const movie = await showMovieDetail(id);
+    const cinemas = await showAllCinema()
+    const data = { movie, cinemas };
+    const body = await handle.renderView("add_show", data);
+    ctx.response.body = body;
+  }
+});
+
+router.get("/show", async (ctx) => {
+  const authorised = ctx.cookies.get("authorised");
+  const staff = ctx.cookies.get("staff");
+  if (authorised === undefined) {
+    ctx.response.redirect("/");
+  } else {
+    const params = ctx.request.url.searchParams;
+    const id = params.get("id");
+    const movieId = params.get("movieId");
+    const data = { authorised, staff, id, movieId };
+    const body = await handle.renderView("show", data);
+    ctx.response.body = body;
+  }
+});
+
 // process form data
 
 router.post("/login", async (ctx) => {
@@ -189,6 +220,14 @@ router.post("/add_comment", async (ctx) => {
   ctx.response.redirect(`/detail?id=${obj.movieId}`);
 });
 
+router.post("/add_show", async (ctx) => {
+  const body = ctx.request.body({ type: "form" });
+  const value = await body.value;
+  const obj = Object.fromEntries(value);
+  await addNewShow(obj);
+  ctx.response.redirect(`/detail?id=${obj.id}`);
+});
+
 // button functions
 
 router.get("/logout", (ctx) => {
@@ -199,25 +238,33 @@ router.get("/logout", (ctx) => {
   ctx.response.redirect("/");
 });
 
-router.get("/delete_user", (ctx) => {
+router.get("/delete_user", async (ctx) => {
   const params = ctx.request.url.searchParams;
   const userName = params.get("name");
-  del(userName);
+  await del(userName);
   ctx.response.redirect("/users");
 });
 
-router.get("/delete_movie", (ctx) => {
+router.get("/delete_movie", async (ctx) => {
   const params = ctx.request.url.searchParams;
   const id = params.get("id");
-  delMovie(id);
+  await delMovie(id);
   ctx.response.redirect("/");
 });
 
-router.get("/delete_comment", (ctx) => {
+router.get("/delete_comment", async (ctx) => {
   const params = ctx.request.url.searchParams;
   const id = params.get("id");
   const movieId = params.get("movieId");
-  delComment(id);
+  await delComment(id);
+  ctx.response.redirect(`/detail?id=${movieId}`);
+});
+
+router.get("/delete_show", async (ctx) => {
+  const params = ctx.request.url.searchParams;
+  const id = params.get("id");
+  const movieId = params.get("movieId");
+  await delShow(id);
   ctx.response.redirect(`/detail?id=${movieId}`);
 });
 

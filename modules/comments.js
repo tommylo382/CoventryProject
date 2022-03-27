@@ -10,7 +10,7 @@ if (url.searchParams.get("db") === "test") {
 
 // internal import
 
-const { showReview, addReview, checkReview, delReview } = await import(
+const { showReview, addReview, checkReview, delReview, showAllReview } = await import(
   path
 );
 
@@ -18,6 +18,13 @@ const { showReview, addReview, checkReview, delReview } = await import(
 
 export async function showComment(id) {
   const records = await showReview(id);
+  return records;
+}
+
+// show all comments
+
+export async function showAllComment() {
+  const records = await showAllReview();
   return records;
 }
 

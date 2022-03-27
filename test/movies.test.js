@@ -21,7 +21,13 @@ Deno.test("show movies", async () => {
 
   assertEquals(test, [
     { id: 3, name: "test3", thumbnail: null, rating: 0, cinemas: [] },
-    { id: 2, name: "test2", thumbnail: null, rating: 3, cinemas: [{ name: "cinema3" }] },
+    {
+      id: 2,
+      name: "test2",
+      thumbnail: null,
+      rating: 3,
+      cinemas: [{ name: "cinema3" }],
+    },
     {
       id: 1,
       name: "test1",
@@ -47,8 +53,8 @@ Deno.test("show movie detail", async () => {
     description: "sample record",
     rating: 4,
     cinemas: [
-      { name: "cinema1", shows: [{ show_time: "2022-03-18 11:00:00" }] },
-      { name: "cinema2", shows: [{ show_time: "2022-03-18 11:30:00" }] },
+      { name: "cinema1", shows: [{ id: 1, show_time: "2022-03-18 11:00:00" }] },
+      { name: "cinema2", shows: [{ id: 2, show_time: "2022-03-18 11:30:00" }] },
     ],
   }, "show movie detail fail");
 });
@@ -68,7 +74,13 @@ Deno.test("search movies by name", async () => {
       rating: 4,
       cinemas: [{ name: "cinema1" }, { name: "cinema2" }],
     },
-    { id: 2, name: "test2", thumbnail: null, rating: 3, cinemas: [{ name: "cinema3" }] },
+    {
+      id: 2,
+      name: "test2",
+      thumbnail: null,
+      rating: 3,
+      cinemas: [{ name: "cinema3" }],
+    },
     { id: 3, name: "test3", thumbnail: null, rating: 0, cinemas: [] },
   ], "search movies by name fail");
 
@@ -91,7 +103,13 @@ Deno.test("search movies by name", async () => {
 
   assertEquals(
     test,
-    [{ id: 2, name: "test2", thumbnail: null, rating: 3, cinemas: [{ name: "cinema3" }] }],
+    [{
+      id: 2,
+      name: "test2",
+      thumbnail: null,
+      rating: 3,
+      cinemas: [{ name: "cinema3" }],
+    }],
     "search movies by name fail",
   );
 
@@ -123,7 +141,13 @@ Deno.test("search movies by cinema", async () => {
       rating: 4,
       cinemas: [{ name: "cinema1" }, { name: "cinema2" }],
     },
-    { id: 2, name: "test2", thumbnail: null, rating: 3, cinemas: [{ name: "cinema3" }] },
+    {
+      id: 2,
+      name: "test2",
+      thumbnail: null,
+      rating: 3,
+      cinemas: [{ name: "cinema3" }],
+    },
   ], "search movies by cinema fail");
 
   test = await findMovie("cinema", "cinema1");
@@ -161,7 +185,13 @@ Deno.test("search movies by cinema", async () => {
 
   assertEquals(
     test,
-    [{ id: 2, name: "test2", thumbnail: null, rating: 3, cinemas: [{ name: "cinema3" }] }],
+    [{
+      id: 2,
+      name: "test2",
+      thumbnail: null,
+      rating: 3,
+      cinemas: [{ name: "cinema3" }],
+    }],
     "search movies by cinema fail",
   );
 

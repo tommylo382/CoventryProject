@@ -1,0 +1,25 @@
+<!doctype html>
+
+<html lang = "en">
+    <head>
+        <meta charset = "utf-8"/>
+        <meta name = "description" content = "home page of cinema booking system"/>
+        <title>Cinema Booking System</title>
+        <!-- external css -->
+        <link href = "/style.css" type = "text/css" rel = "stylesheet" />
+    </head>
+    <body>
+        <header>
+            <h1>Show</h1>
+            <a href = "/">Home</a>
+            <a href = "/logout">Log Out</a>
+        </header>
+        <main>
+            <section>
+                {{#if staff}}
+                    <p><a href = "/delete_show?id={{id}}&movieId={{movieId}}">Delete show</a></p>
+                {{/if}}
+            </section>
+        </main>
+    </body>
+</html>

@@ -1,0 +1,33 @@
+<!doctype html>
+
+<html lang = "en">
+    <head>
+        <meta charset = "utf-8"/>
+        <meta name = "description" content = "home page of cinema booking system"/>
+        <title>Cinema Booking System</title>
+        <!-- external css -->
+        <link href = "/style.css" type = "text/css" rel = "stylesheet" />
+    </head>
+    <body>
+        <header>
+            <h1>Add New Show</h1>
+            <a href = "/">Home</a>
+            <a href = "/logout">Log Out</a>
+        </header>
+        <main>
+            <section>
+                <form action = "/add_show" method = "post">
+                    <p><label>Movie id: </label><br /><input name = "id" type = "text" value = "{{movie.id}}" required readonly /></p>
+                    <p><label>Movie name: </label><br /><input name = "name" type = "text" value = "{{movie.name}}" required readonly /></p>
+                    <p><label>Cinema: </label><br /><select name = "cinema">
+                        {{#each cinemas}}
+                            <option value = "{{this.id}}">{{this.name}}</option>
+                        {{/each}}
+                    </select></p>
+                    <p><label>Show time: </label><br /><input name = "time" type = "datetime-local" /></p>
+                    <p><input type = "submit" value = "Add" /></p>
+                </form>
+            </section>
+        </main>
+    </body>
+</html>

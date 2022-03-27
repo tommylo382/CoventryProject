@@ -11,6 +11,7 @@ USE 300COM;
 
 -- tables
 
+DROP TABLE IF EXISTS sits;
 DROP TABLE IF EXISTS comments;
 DROP TABLE IF EXISTS shows;
 DROP TABLE IF EXISTS cinemas;
@@ -51,6 +52,27 @@ CREATE TABLE IF NOT EXISTS comments (
     name VARCHAR(50) NOT NULL,
     rating  TINYINT UNSIGNED NOT NULL,
     review VARCHAR(3000) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS sits (
+    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    show_id  INT UNSIGNED NOT NULL,
+    FOREIGN KEY (show_id) REFERENCES shows(id),
+    a1 VARCHAR(50),
+    a2 VARCHAR(50),
+    a3 VARCHAR(50),
+    a4 VARCHAR(50),
+    a5 VARCHAR(50),
+    b1 VARCHAR(50),
+    b2 VARCHAR(50),
+    b3 VARCHAR(50),
+    b4 VARCHAR(50),
+    b5 VARCHAR(50),
+    c1 VARCHAR(50),
+    c2 VARCHAR(50),
+    c3 VARCHAR(50),
+    c4 VARCHAR(50),
+    c5 VARCHAR(50)
 );
 
 -- init records
@@ -76,6 +98,8 @@ INSERT INTO comments (movie_id, name, rating, review) VALUES ('1', 'user1', '3',
 INSERT INTO comments (movie_id, name, rating, review) VALUES ('1', 'staff1', '5', 'sample record');
 INSERT INTO comments (movie_id, name, rating, review) VALUES ('2', 'user1', '3', 'sample record');
 
+INSERT INTO sits (show_id, a1, b2, c3) VALUES ('1', 'host', 'admin1', 'staff1');
+
 -- testing db
 
 CREATE DATABASE IF NOT EXISTS test;
@@ -83,6 +107,7 @@ USE test;
 
 -- tables
 
+DROP TABLE IF EXISTS sits;
 DROP TABLE IF EXISTS comments;
 DROP TABLE IF EXISTS shows;
 DROP TABLE IF EXISTS cinemas;
@@ -125,6 +150,27 @@ CREATE TABLE IF NOT EXISTS comments (
     review VARCHAR(3000) NOT NULL
 );
 
+CREATE TABLE IF NOT EXISTS sits (
+    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    show_id  INT UNSIGNED NOT NULL,
+    FOREIGN KEY (show_id) REFERENCES shows(id),
+    a1 VARCHAR(50),
+    a2 VARCHAR(50),
+    a3 VARCHAR(50),
+    a4 VARCHAR(50),
+    a5 VARCHAR(50),
+    b1 VARCHAR(50),
+    b2 VARCHAR(50),
+    b3 VARCHAR(50),
+    b4 VARCHAR(50),
+    b5 VARCHAR(50),
+    c1 VARCHAR(50),
+    c2 VARCHAR(50),
+    c3 VARCHAR(50),
+    c4 VARCHAR(50),
+    c5 VARCHAR(50)
+);
+
 -- init records
 
 INSERT INTO accounts (user_name, password, role) VALUES ('host', 'password', 'h');
@@ -147,3 +193,5 @@ INSERT INTO shows (show_time, movie_id, cinema_id) VALUES ('2022-03-18 12:00:00'
 INSERT INTO comments (movie_id, name, rating, review) VALUES ('1', 'user1', '3', 'sample record');
 INSERT INTO comments (movie_id, name, rating, review) VALUES ('1', 'staff1', '5', 'sample record');
 INSERT INTO comments (movie_id, name, rating, review) VALUES ('2', 'user1', '3', 'sample record');
+
+INSERT INTO sits (show_id, a1, b2, c3) VALUES ('1', 'host', 'admin1', 'staff1');

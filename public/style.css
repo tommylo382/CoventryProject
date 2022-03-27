@@ -209,8 +209,7 @@ input:valid, textarea:valid {
 
 
 select {
-	width: 26.3vw;
-	-webkit-appearance: none;
+	background-color: white;
 	-webkit-border-radius: 0px;
 }
 

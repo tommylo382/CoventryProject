@@ -35,7 +35,7 @@ const {
 export async function showMovie() {
   const records = await showFilm();
   for (const record of records) {
-    record.rating = await showRating(record.id)
+    record.rating = await showRating(record.id);
     record.rating = Math.round(record.rating * 10) / 10;
     record.cinemas = await showCinema(record.id);
   }
@@ -53,9 +53,7 @@ export async function showMovieDetail(id) {
     const shows = await showShows(id, cinema.name);
     for (const show of shows) {
       show.show_time = JSON.stringify(show.show_time);
-      show.show_time = `${show.show_time.split("T")[0].substring(1)} ${
-        show.show_time.split("T")[1].split(".")[0]
-      }`;
+      show.show_time = show.show_time.replace("T", " ").substring(1).split(".")[0];
     }
     cinema.shows = shows;
   }

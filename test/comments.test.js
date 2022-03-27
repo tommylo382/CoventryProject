@@ -8,6 +8,7 @@ import {
   addComment,
   delComment,
   showComment,
+  showAllComment,
 } from "../modules/comments.js?db=test";
 
 // test show comments
@@ -56,7 +57,7 @@ Deno.test("create comment", async () => {
 // test delete comment
 
 Deno.test("delete comment", async () => {
-  const records = await showComment(1);
+  const records = await showAllComment();
   const id = records.pop().id;
 
   const test = await delComment(id);

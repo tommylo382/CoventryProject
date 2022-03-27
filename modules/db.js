@@ -143,7 +143,7 @@ export async function showOneFilm(id) {
 export async function showShows(movieId, cinemaName) {
   const db = await new Client().connect(conn);
   const sql =
-    `SELECT show_time FROM ((shows INNER JOIN cinemas ON cinema_id=cinemas.id) INNER JOIN movies ON movie_id=movies.id) WHERE movies.id="${movieId}" AND cinemas.name="${cinemaName}";`;
+    `SELECT shows.id, show_time FROM ((shows INNER JOIN cinemas ON cinema_id=cinemas.id) INNER JOIN movies ON movie_id=movies.id) WHERE movies.id="${movieId}" AND cinemas.name="${cinemaName}";`;
   const records = await db.query(sql);
   db.close();
   return records;
@@ -210,7 +210,13 @@ export async function checkFilm(id) {
 
 export async function delFilm(id) {
   const db = await new Client().connect(conn);
-  const sql = `DELETE FROM movies WHERE id="${id}"`;
+  let sql = `DELETE FROM shows WHERE movie_id="${id}"`;
+  await db.query(sql);
+
+  sql = `DELETE FROM comments WHERE movie_id="${id}"`;
+  await db.query(sql);
+
+  sql = `DELETE FROM movies WHERE id="${id}"`;
   await db.query(sql);
   db.close();
 }
@@ -220,7 +226,18 @@ export async function delFilm(id) {
 export async function showReview(id) {
   const db = await new Client().connect(conn);
   const sql =
-    `SELECT id, name, rating, review FROM comments WHERE movie_id="${id}";`;
+    `SELECT id, name, rating, review FROM comments WHERE movie_id="${id}" ORDER BY id;`;
+  const records = await db.query(sql);
+  db.close();
+  return records;
+}
+
+// show all comments
+
+export async function showAllReview() {
+  const db = await new Client().connect(conn);
+  const sql =
+    `SELECT id, name, rating, review FROM comments ORDER BY id;`;
   const records = await db.query(sql);
   db.close();
   return records;
@@ -236,7 +253,7 @@ export async function addReview(data) {
   db.close();
 }
 
-// check if a movie exists
+// check if a comment exists
 
 export async function checkReview(id) {
   const db = await new Client().connect(conn);
@@ -250,7 +267,7 @@ export async function checkReview(id) {
   }
 }
 
-// delete movie
+// delete comment
 
 export async function delReview(id) {
   const db = await new Client().connect(conn);
@@ -263,8 +280,64 @@ export async function delReview(id) {
 
 export async function showRating(id) {
   const db = await new Client().connect(conn);
-  const sql = `SELECT AVG(rating) AS ratings FROM comments WHERE movie_id="${id}"`;
+  const sql =
+    `SELECT AVG(rating) AS ratings FROM comments WHERE movie_id="${id}"`;
   const records = await db.query(sql);
   db.close();
   return records[0].ratings;
+}
+
+// create new show
+
+export async function addShow(data) {
+  const db = await new Client().connect(conn);
+  const sql =
+    `INSERT INTO shows(show_time, movie_id, cinema_id) VALUES("${data.time}", "${data.id}", "${data.cinema}");`;
+  await db.query(sql);
+  db.close();
+}
+
+// show all cinemas
+
+export async function allCinema() {
+  const db = await new Client().connect(conn);
+  const sql = "SELECT id, name FROM cinemas;";
+  const records = await db.query(sql);
+  db.close();
+  return records;
+}
+
+// check if a show exists
+
+export async function checkShows(id) {
+  const db = await new Client().connect(conn);
+  const sql = `SELECT COUNT(id) AS count FROM shows WHERE id="${id}";`;
+  const records = await db.query(sql);
+  db.close();
+  if (records[0].count) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+// show all shows
+
+export async function showAllShows() {
+  const db = await new Client().connect(conn);
+  const sql =
+    `SELECT id FROM shows ORDER BY id;`;
+  const records = await db.query(sql);
+  console.log(records)
+  db.close();
+  return records;
+}
+
+// delete show
+
+export async function delShows(id) {
+  const db = await new Client().connect(conn);
+  const sql = `DELETE FROM shows WHERE id="${id}"`;
+  await db.query(sql);
+  db.close();
 }
