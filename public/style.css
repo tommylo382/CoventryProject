@@ -326,3 +326,22 @@ section p a {
     border-radius: 0.5vw;
     padding: 0.2vw 0.4vw;
 }
+
+input[type="checkbox"]:checked {
+	background-color: darkblue;
+}
+
+input[type="checkbox"], input[class="owned"]:checked {
+	background-color: green;
+	appearance: none;
+	width: 2.5vw;
+	height: 2.5vw;
+}
+
+input[type="checkbox"]:disabled {
+	background-color: red;
+}
+
+input[class="owned"] {
+	background-color: darkblue;
+}

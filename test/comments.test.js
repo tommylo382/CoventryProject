@@ -7,8 +7,8 @@ import { assertEquals } from "https://deno.land/std/testing/asserts.ts";
 import {
   addComment,
   delComment,
-  showComment,
   showAllComment,
+  showComment,
 } from "../modules/comments.js?db=test";
 
 // test show comments

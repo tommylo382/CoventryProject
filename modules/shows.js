@@ -17,15 +17,15 @@ const { allCinema, addShow, checkShows, delShows, showAllShows } = await import(
 // show all cinemas
 
 export async function showAllCinema() {
-  const records = await allCinema()
+  const records = await allCinema();
   return records;
 }
 
 // add new show
 
 export async function addNewShow(data) {
-  data.time = data.time.replace("T", " ")
-  await addShow(data)
+  data.time = data.time.replace("T", " ");
+  await addShow(data);
   return `added new show for ${data.name}`;
 }
 

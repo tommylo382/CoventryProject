@@ -11,7 +11,7 @@ USE 300COM;
 
 -- tables
 
-DROP TABLE IF EXISTS sits;
+DROP TABLE IF EXISTS seats;
 DROP TABLE IF EXISTS comments;
 DROP TABLE IF EXISTS shows;
 DROP TABLE IF EXISTS cinemas;
@@ -54,10 +54,12 @@ CREATE TABLE IF NOT EXISTS comments (
     review VARCHAR(3000) NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS sits (
+CREATE TABLE IF NOT EXISTS seats (
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     show_id  INT UNSIGNED NOT NULL,
     FOREIGN KEY (show_id) REFERENCES shows(id),
+    movie_id  INT UNSIGNED NOT NULL,
+    FOREIGN KEY (movie_id) REFERENCES movies(id),
     a1 VARCHAR(50),
     a2 VARCHAR(50),
     a3 VARCHAR(50),
@@ -98,7 +100,9 @@ INSERT INTO comments (movie_id, name, rating, review) VALUES ('1', 'user1', '3',
 INSERT INTO comments (movie_id, name, rating, review) VALUES ('1', 'staff1', '5', 'sample record');
 INSERT INTO comments (movie_id, name, rating, review) VALUES ('2', 'user1', '3', 'sample record');
 
-INSERT INTO sits (show_id, a1, b2, c3) VALUES ('1', 'host', 'admin1', 'staff1');
+INSERT INTO seats (show_id, movie_id, a1, b2, c3) VALUES ('1', '1', 'host', 'admin1', 'staff1');
+INSERT INTO seats (show_id, movie_id, a1, b2, c3) VALUES ('2', '1', 'host', 'admin1', 'staff1');
+INSERT INTO seats (show_id, movie_id, a1, b2, c3) VALUES ('3', '2', 'host', 'admin1', 'staff1');
 
 -- testing db
 
@@ -107,7 +111,7 @@ USE test;
 
 -- tables
 
-DROP TABLE IF EXISTS sits;
+DROP TABLE IF EXISTS seats;
 DROP TABLE IF EXISTS comments;
 DROP TABLE IF EXISTS shows;
 DROP TABLE IF EXISTS cinemas;
@@ -150,10 +154,12 @@ CREATE TABLE IF NOT EXISTS comments (
     review VARCHAR(3000) NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS sits (
+CREATE TABLE IF NOT EXISTS seats (
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     show_id  INT UNSIGNED NOT NULL,
     FOREIGN KEY (show_id) REFERENCES shows(id),
+    movie_id  INT UNSIGNED NOT NULL,
+    FOREIGN KEY (movie_id) REFERENCES movies(id),
     a1 VARCHAR(50),
     a2 VARCHAR(50),
     a3 VARCHAR(50),
@@ -194,4 +200,6 @@ INSERT INTO comments (movie_id, name, rating, review) VALUES ('1', 'user1', '3',
 INSERT INTO comments (movie_id, name, rating, review) VALUES ('1', 'staff1', '5', 'sample record');
 INSERT INTO comments (movie_id, name, rating, review) VALUES ('2', 'user1', '3', 'sample record');
 
-INSERT INTO sits (show_id, a1, b2, c3) VALUES ('1', 'host', 'admin1', 'staff1');
+INSERT INTO seats (show_id, movie_id, a1, b2, c3) VALUES ('1', '1', 'host', 'admin1', 'staff1');
+INSERT INTO seats (show_id, movie_id, a1, b2, c3) VALUES ('2', '1', 'host', 'admin1', 'staff1');
+INSERT INTO seats (show_id, movie_id, a1, b2, c3) VALUES ('3', '2', 'host', 'admin1', 'staff1');

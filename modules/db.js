@@ -210,7 +210,10 @@ export async function checkFilm(id) {
 
 export async function delFilm(id) {
   const db = await new Client().connect(conn);
-  let sql = `DELETE FROM shows WHERE movie_id="${id}"`;
+  let sql = `DELETE FROM seats WHERE movie_id="${id}"`;
+  await db.query(sql);
+
+  sql = `DELETE FROM shows WHERE movie_id="${id}"`;
   await db.query(sql);
 
   sql = `DELETE FROM comments WHERE movie_id="${id}"`;
@@ -236,8 +239,7 @@ export async function showReview(id) {
 
 export async function showAllReview() {
   const db = await new Client().connect(conn);
-  const sql =
-    `SELECT id, name, rating, review FROM comments ORDER BY id;`;
+  const sql = `SELECT id, name, rating, review FROM comments ORDER BY id;`;
   const records = await db.query(sql);
   db.close();
   return records;
@@ -291,8 +293,14 @@ export async function showRating(id) {
 
 export async function addShow(data) {
   const db = await new Client().connect(conn);
-  const sql =
+  let sql =
     `INSERT INTO shows(show_time, movie_id, cinema_id) VALUES("${data.time}", "${data.id}", "${data.cinema}");`;
+  await db.query(sql);
+
+  const records = await showAllShows()
+  const id = records.pop().id
+
+  sql = `INSERT INTO seats(show_id, movie_id) VALUES("${id}", "${data.id}");`;
   await db.query(sql);
   db.close();
 }
@@ -325,10 +333,8 @@ export async function checkShows(id) {
 
 export async function showAllShows() {
   const db = await new Client().connect(conn);
-  const sql =
-    `SELECT id FROM shows ORDER BY id;`;
+  const sql = `SELECT id FROM shows ORDER BY id;`;
   const records = await db.query(sql);
-  console.log(records)
   db.close();
   return records;
 }
@@ -337,7 +343,44 @@ export async function showAllShows() {
 
 export async function delShows(id) {
   const db = await new Client().connect(conn);
-  const sql = `DELETE FROM shows WHERE id="${id}"`;
+  let sql = `DELETE FROM seats WHERE show_id="${id}"`;
+  await db.query(sql);
+
+  sql = `DELETE FROM shows WHERE id="${id}"`;
+  await db.query(sql);
+  db.close();
+}
+
+// show seats
+
+export async function showSeats(id) {
+  const db = await new Client().connect(conn);
+
+  let sql = `SELECT shows.show_time, movies.name FROM shows INNER JOIN movies ON shows.movie_id=movies.id WHERE shows.id="${id}";`;
+  let records = await db.query(sql);
+  const record = records[0];
+
+  sql = `SELECT a1, a2, a3, a4, a5 FROM seats WHERE show_id="${id}";`;
+  records = await db.query(sql);
+  record.a_row = records[0];
+
+  sql = `SELECT b1, b2, b3, b4, b5 FROM seats WHERE show_id="${id}";`;
+  records = await db.query(sql);
+  record.b_row = records[0];
+
+  sql = `SELECT c1, c2, c3, c4, c5 FROM seats WHERE show_id="${id}";`;
+  records = await db.query(sql);
+  record.c_row = records[0];
+
+  db.close();
+  return record;
+}
+
+// book seat
+
+export async function updateSeat(id, seats) {
+  const db = await new Client().connect(conn);
+  const sql = `UPDATE seats SET${seats} WHERE show_id="${id}";`;
   await db.query(sql);
   db.close();
 }

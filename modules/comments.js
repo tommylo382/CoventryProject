@@ -10,9 +10,10 @@ if (url.searchParams.get("db") === "test") {
 
 // internal import
 
-const { showReview, addReview, checkReview, delReview, showAllReview } = await import(
-  path
-);
+const { showReview, addReview, checkReview, delReview, showAllReview } =
+  await import(
+    path
+  );
 
 // show all comments of a movie
 

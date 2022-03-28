@@ -15,7 +15,8 @@ import {
   showMovieDetail,
 } from "./modules/movies.js";
 import { addComment, delComment, showComment } from "./modules/comments.js";
-import { showAllCinema, addNewShow, delShow } from "./modules/shows.js";
+import { addNewShow, delShow, showAllCinema } from "./modules/shows.js";
+import { showSeat, bookSeat } from "./modules/seats.js";
 
 const handle = new Handlebars({ defaultLayout: "" });
 const router = new Router();
@@ -123,7 +124,7 @@ router.get("/add_show", async (ctx) => {
     const params = ctx.request.url.searchParams;
     const id = params.get("id");
     const movie = await showMovieDetail(id);
-    const cinemas = await showAllCinema()
+    const cinemas = await showAllCinema();
     const data = { movie, cinemas };
     const body = await handle.renderView("add_show", data);
     ctx.response.body = body;
@@ -139,7 +140,8 @@ router.get("/show", async (ctx) => {
     const params = ctx.request.url.searchParams;
     const id = params.get("id");
     const movieId = params.get("movieId");
-    const data = { authorised, staff, id, movieId };
+    const seat = await showSeat(id, authorised)
+    const data = { authorised, staff, id, movieId, seat };
     const body = await handle.renderView("show", data);
     ctx.response.body = body;
   }
@@ -226,6 +228,15 @@ router.post("/add_show", async (ctx) => {
   const obj = Object.fromEntries(value);
   await addNewShow(obj);
   ctx.response.redirect(`/detail?id=${obj.id}`);
+});
+
+router.post("/seat", async (ctx) => {
+  const body = ctx.request.body({ type: "form" });
+  const value = await body.value;
+  const obj = Object.fromEntries(value);
+  const {id, movieId} = obj;
+  await bookSeat(obj)
+  ctx.response.redirect(`/show?id=${id}&movieId=${movieId}`);
 });
 
 // button functions

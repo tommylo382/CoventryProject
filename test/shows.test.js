@@ -5,10 +5,10 @@ import { assertEquals } from "https://deno.land/std/testing/asserts.ts";
 // internal import
 
 import {
-  showAllCinema,
   addNewShow,
-  showAllShow,
   delShow,
+  showAllCinema,
+  showAllShow,
 } from "../modules/shows.js?db=test";
 
 // test show all cinemas
@@ -18,10 +18,10 @@ Deno.test("show all cinemas", async () => {
   console.log(test);
 
   assertEquals(test, [
-  { id: 1, name: "cinema1" },
-  { id: 2, name: "cinema2" },
-  { id: 3, name: "cinema3" }
-], "show all cinemas fail");
+    { id: 1, name: "cinema1" },
+    { id: 2, name: "cinema2" },
+    { id: 3, name: "cinema3" },
+  ], "show all cinemas fail");
 });
 
 // test create show
@@ -52,7 +52,7 @@ Deno.test("delete show", async () => {
   assertEquals(test, `delete show id ${id}`, "delete movie fail");
 });
 
-Deno.test("delete non exists comment", async () => {
+Deno.test("delete non exists show", async () => {
   const test = await delShow(0);
   console.log(test);
 
