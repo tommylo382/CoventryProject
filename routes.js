@@ -16,7 +16,7 @@ import {
 } from "./modules/movies.js";
 import { addComment, delComment, showComment } from "./modules/comments.js";
 import { addNewShow, delShow, showAllCinema } from "./modules/shows.js";
-import { showSeat, bookSeat } from "./modules/seats.js";
+import { bookSeat, showSeat } from "./modules/seats.js";
 
 const handle = new Handlebars({ defaultLayout: "" });
 const router = new Router();
@@ -140,7 +140,7 @@ router.get("/show", async (ctx) => {
     const params = ctx.request.url.searchParams;
     const id = params.get("id");
     const movieId = params.get("movieId");
-    const seat = await showSeat(id, authorised)
+    const seat = await showSeat(id, authorised);
     const data = { authorised, staff, id, movieId, seat };
     const body = await handle.renderView("show", data);
     ctx.response.body = body;
@@ -234,8 +234,8 @@ router.post("/seat", async (ctx) => {
   const body = ctx.request.body({ type: "form" });
   const value = await body.value;
   const obj = Object.fromEntries(value);
-  const {id, movieId} = obj;
-  await bookSeat(obj)
+  const { id, movieId } = obj;
+  await bookSeat(obj);
   ctx.response.redirect(`/show?id=${id}&movieId=${movieId}`);
 });
 

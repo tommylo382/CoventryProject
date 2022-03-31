@@ -297,8 +297,8 @@ export async function addShow(data) {
     `INSERT INTO shows(show_time, movie_id, cinema_id) VALUES("${data.time}", "${data.id}", "${data.cinema}");`;
   await db.query(sql);
 
-  const records = await showAllShows()
-  const id = records.pop().id
+  const records = await showAllShows();
+  const id = records.pop().id;
 
   sql = `INSERT INTO seats(show_id, movie_id) VALUES("${id}", "${data.id}");`;
   await db.query(sql);
@@ -356,7 +356,8 @@ export async function delShows(id) {
 export async function showSeats(id) {
   const db = await new Client().connect(conn);
 
-  let sql = `SELECT shows.show_time, movies.name FROM shows INNER JOIN movies ON shows.movie_id=movies.id WHERE shows.id="${id}";`;
+  let sql =
+    `SELECT shows.show_time, movies.name FROM shows INNER JOIN movies ON shows.movie_id=movies.id WHERE shows.id="${id}";`;
   let records = await db.query(sql);
   const record = records[0];
 

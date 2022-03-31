@@ -54,7 +54,7 @@ export async function showMovieDetail(id) {
     for (const show of shows) {
       show.show_time = JSON.stringify(show.show_time);
       show.show_time =
-      show.show_time.replace("T", " ").substring(1).split(".")[0];
+        show.show_time.replace("T", " ").substring(1).split(".")[0];
     }
     cinema.shows = shows;
   }

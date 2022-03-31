@@ -19,21 +19,22 @@ const { showSeats, updateSeat } = await import(
 export async function showSeat(id, user) {
   const record = await showSeats(id);
   record.show_time = JSON.stringify(record.show_time);
-  record.show_time = record.show_time.replace("T", " ").substring(1).split(".")[0]
+  record.show_time =
+    record.show_time.replace("T", " ").substring(1).split(".")[0];
   for (const seat in record.a_row) {
-    record.a_row[seat] = {name: record.a_row[seat]};
+    record.a_row[seat] = { name: record.a_row[seat] };
     if (record.a_row[seat].name === user) {
       record.a_row[seat].own = true;
     }
   }
   for (const seat in record.b_row) {
-    record.b_row[seat] = {name: record.b_row[seat]};
+    record.b_row[seat] = { name: record.b_row[seat] };
     if (record.b_row[seat].name === user) {
       record.b_row[seat].own = true;
     }
   }
   for (const seat in record.c_row) {
-    record.c_row[seat] = {name: record.c_row[seat]};
+    record.c_row[seat] = { name: record.c_row[seat] };
     if (record.c_row[seat].name === user) {
       record.c_row[seat].own = true;
     }
@@ -48,7 +49,7 @@ export async function bookSeat(data) {
   delete data.id;
   delete data.movieId;
   if (Object.keys(data).length === 0) {
-    return "no changes were made"
+    return "no changes were made";
   } else {
     let seats = "";
     let message = "";
