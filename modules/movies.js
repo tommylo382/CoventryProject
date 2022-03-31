@@ -82,8 +82,8 @@ export async function editMovie(data) {
     await editDetail(data);
   } else {
     const size = {
-      width: 128,
-      height: 72,
+      width: 320,
+      height: 180,
     };
     const image = await resize(Deno.readFileSync(file.filename), size);
     const imageURL = `data:image/jpeg;base64,${Base64.fromUint8Array(image)}`;
@@ -98,8 +98,8 @@ export async function addMovie(data) {
   const file = data.files[0];
   data = data.fields;
   const size = {
-    width: 128,
-    height: 72,
+    width: 320,
+    height: 180,
   };
   const image = await resize(Deno.readFileSync(file.filename), size);
   const imageURL = `data:image/jpeg;base64,${Base64.fromUint8Array(image)}`;
