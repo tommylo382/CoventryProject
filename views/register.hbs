@@ -25,7 +25,7 @@
                     <p><label>Password: </label><br /><input name = "password" type = "password" required /></p>
                     {{#if admin}}
                         <p>Creating Staff Account: <br />
-                        <label><input name = "role" type = "checkbox" value = "s" />Yes</label></p>
+                        <label><input name = "role" type = "checkbox" value = "s" style="appearance: auto;height: auto;" />Yes</label></p>
                     {{/if}}
                     <p><input type = "submit" value = "{{#unless admin}}Register{{else}}Create{{/unless}}" /></p>
                 </form>
