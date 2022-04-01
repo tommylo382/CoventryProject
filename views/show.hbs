@@ -38,7 +38,7 @@
                         <p><input type = "submit" value = "Book" /></p>
                     </form>
                 {{else}}
-                    <p>The show is full, please book in another time slot.</p>
+                    <p style = "color: red;">The show is full, please book in another time slot.</p>
                 {{/unless}}
                 {{#if staff}}
                     <p><a href = "/delete_show?id={{id}}&movieId={{movieId}}">Delete show</a></p>

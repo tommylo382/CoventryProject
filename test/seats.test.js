@@ -4,7 +4,7 @@ import { assertEquals } from "https://deno.land/std/testing/asserts.ts";
 
 // internal import
 
-import { bookSeat, showSeat, checkSeat } from "../modules/seats.js?db=test";
+import { bookSeat, checkSeat, showSeat } from "../modules/seats.js?db=test";
 
 // test show seats
 

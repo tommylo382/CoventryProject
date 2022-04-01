@@ -16,7 +16,7 @@ import {
 } from "./modules/movies.js";
 import { addComment, delComment, showComment } from "./modules/comments.js";
 import { addNewShow, delShow, showAllCinema } from "./modules/shows.js";
-import { bookSeat, showSeat, checkSeat } from "./modules/seats.js";
+import { bookSeat, checkSeat, showSeat } from "./modules/seats.js";
 
 const handle = new Handlebars({ defaultLayout: "" });
 const router = new Router();
