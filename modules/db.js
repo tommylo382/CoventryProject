@@ -22,10 +22,10 @@ const connData = {
     db: database,
   },
   "/app": {
-    hostname: "db.bit.io",
-    username: "tommylo384_demo_db_connection",
-    password: "36TS5_jfwPuZ4gX8xP87RwAFML8iz",
-    db: "bitdotio",
+    hostname: "sql4.freesqldatabase.com",
+    username: "sql4482893",
+    password: "DgQr65tHRY",
+    db: "sql4482893",
   },
 };
 const home = Deno.env.get("HOME");
