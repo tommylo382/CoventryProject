@@ -67,3 +67,26 @@ export async function bookSeat(data) {
     return `edited seats${message} state for show id ${id}`;
   }
 }
+
+// check seats
+
+export async function checkSeat(id, user) {
+  const record = await showSeats(id);
+  let count = 0;
+  for (const seat in record.a_row) {
+    if (record.a_row[seat] !== null && record.a_row[seat] !== user) {
+      count++;
+    }
+  }
+  for (const seat in record.b_row) {
+    if (record.b_row[seat] !== null && record.b_row[seat] !== user) {
+      count++;
+    }
+  }
+  for (const seat in record.c_row) {
+    if (record.c_row[seat] !== null && record.c_row[seat] !== user) {
+      count++;
+    }
+  }
+  return count;
+}

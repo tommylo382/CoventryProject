@@ -20,22 +20,26 @@
             <section>
                 <h2>{{seat.name}}({{seat.show_time}})<br />Seats: </h2>
                 <p>(red = occupied, green = free, blue = booked by you)</p>
-                <form action = "/seat" method = "post">
-                    <input name = "id" type = "hidden" value = "{{id}}" required/>
-                    <input name = "movieId" type = "hidden" value = "{{movieId}}" required />
-                    {{#each seat.a_row}}
-                        <input type = "checkbox" name = "{{@key}}" {{#if this.own}}class = "owned" value = "owned"{{else if this.name}}disabled{{else}}value = "{{../authorised}}"{{/if}} />
-                    {{/each}}
-                    <br />
-                    {{#each seat.b_row}}
-                        <input type = "checkbox" name = "{{@key}}" {{#if this.own}}class = "owned" value = "owned"{{else if this.name}}disabled{{else}}value = "{{../authorised}}"{{/if}} />
-                    {{/each}}
-                    <br />
-                    {{#each seat.c_row}}
-                        <input type = "checkbox" name = "{{@key}}" {{#if this.own}}class = "owned" value = "owned"{{else if this.name}}disabled{{else}}value = "{{../authorised}}"{{/if}} />
-                    {{/each}}
-                    <p><input type = "submit" value = "Book" /></p>
-                </form>
+                {{#unless full}}
+                    <form action = "/seat" method = "post">
+                        <input name = "id" type = "hidden" value = "{{id}}" required/>
+                        <input name = "movieId" type = "hidden" value = "{{movieId}}" required />
+                        {{#each seat.a_row}}
+                            <input type = "checkbox" name = "{{@key}}" {{#if this.own}}class = "owned" value = "owned"{{else if this.name}}disabled{{else}}value = "{{../authorised}}"{{/if}} />
+                        {{/each}}
+                        <br />
+                        {{#each seat.b_row}}
+                            <input type = "checkbox" name = "{{@key}}" {{#if this.own}}class = "owned" value = "owned"{{else if this.name}}disabled{{else}}value = "{{../authorised}}"{{/if}} />
+                        {{/each}}
+                        <br />
+                        {{#each seat.c_row}}
+                            <input type = "checkbox" name = "{{@key}}" {{#if this.own}}class = "owned" value = "owned"{{else if this.name}}disabled{{else}}value = "{{../authorised}}"{{/if}} />
+                        {{/each}}
+                        <p><input type = "submit" value = "Book" /></p>
+                    </form>
+                {{else}}
+                    <p>The show is full, please book in another time slot.</p>
+                {{/unless}}
                 {{#if staff}}
                     <p><a href = "/delete_show?id={{id}}&movieId={{movieId}}">Delete show</a></p>
                 {{/if}}

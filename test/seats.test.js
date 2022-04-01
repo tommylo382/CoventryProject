@@ -4,7 +4,7 @@ import { assertEquals } from "https://deno.land/std/testing/asserts.ts";
 
 // internal import
 
-import { bookSeat, showSeat } from "../modules/seats.js?db=test";
+import { bookSeat, showSeat, checkSeat } from "../modules/seats.js?db=test";
 
 // test show seats
 
@@ -53,4 +53,12 @@ Deno.test("book seats no input", async () => {
   const test = await bookSeat(seats);
   console.log(test);
   assertEquals(test, "no changes were made", "book seats no input fail");
+});
+
+// test check seats
+
+Deno.test("check seats", async () => {
+  const test = await checkSeat(1, "host");
+  console.log(test);
+  assertEquals(test, 2, "check seats fail");
 });

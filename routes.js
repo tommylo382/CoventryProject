@@ -16,7 +16,7 @@ import {
 } from "./modules/movies.js";
 import { addComment, delComment, showComment } from "./modules/comments.js";
 import { addNewShow, delShow, showAllCinema } from "./modules/shows.js";
-import { bookSeat, showSeat } from "./modules/seats.js";
+import { bookSeat, showSeat, checkSeat } from "./modules/seats.js";
 
 const handle = new Handlebars({ defaultLayout: "" });
 const router = new Router();
@@ -140,8 +140,13 @@ router.get("/show", async (ctx) => {
     const params = ctx.request.url.searchParams;
     const id = params.get("id");
     const movieId = params.get("movieId");
+    const count = await checkSeat(id, authorised);
+    let full;
     const seat = await showSeat(id, authorised);
-    const data = { authorised, staff, id, movieId, seat };
+    if (count === 15) {
+      full = true;
+    }
+    const data = { authorised, staff, id, movieId, seat, full };
     const body = await handle.renderView("show", data);
     ctx.response.body = body;
   }
