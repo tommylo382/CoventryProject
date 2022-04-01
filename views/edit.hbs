@@ -19,7 +19,7 @@
                 <form action = "/edit" method = "post" enctype = "multipart/form-data">
                     <input name = "id" type = "hidden" value = "{{movie.id}}" required />
                     <p><label>Movie name: </label><br /><input name = "name" type = "text" value = "{{movie.name}}" required autofocus /></p>
-                    <p><label>Description: </label><br /><textarea name = "description" value = "{{movie.description}}" required></textarea></p>
+                    <p><label>Description: </label><br /><textarea name = "description" required>{{movie.description}}</textarea></p>
                     <p><label>Thumbnail: </label><br /><input name = "thumbnail" type = "file" accept = "image/jpeg" /></p>
                     <p><input type = "submit" value = "Edit" /></p>
                 </form>
