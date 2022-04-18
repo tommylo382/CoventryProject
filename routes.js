@@ -134,12 +134,12 @@ router.get("/add_show", async (ctx) => {
 router.get("/show", async (ctx) => {
   const authorised = ctx.cookies.get("authorised");
   const staff = ctx.cookies.get("staff");
+    const movieId = params.get("movieId");
   if (authorised === undefined) {
-    ctx.response.redirect("/");
+    ctx.response.redirect(`/detail?id=${movieId}`);
   } else {
     const params = ctx.request.url.searchParams;
     const id = params.get("id");
-    const movieId = params.get("movieId");
     const count = await checkSeat(id, authorised);
     let full;
     const seat = await showSeat(id, authorised);
