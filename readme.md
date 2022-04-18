@@ -18,14 +18,10 @@ git push origin HEAD:main
 
 sample accounts:
 
-username: host
-password: password
+username: host password: password
 
-username: admin1
-password: password
+username: admin1 password: password
 
-username: staff1
-password: password
+username: staff1 password: password
 
-username: user1
-password: password
+username: user1 password: password
