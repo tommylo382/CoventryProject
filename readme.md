@@ -1,3 +1,7 @@
+Project report:
+
+https://github.com/tommylo382/CoventryProject/blob/main/300COM_report.docx
+
 Start server:
 
 ```shell
